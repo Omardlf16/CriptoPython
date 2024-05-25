@@ -5,6 +5,7 @@ from cipher.index import cipher
 from decipher.index import decipher
 from hash.index import hash_file
 from hmac_hash.index import hmac_hash
+from keypair.index import keypair
 
 types = ["bytes", "int", "uuid"]
 encs = ["ascii","utf8","utf-8","utf16le","utf-16le","ucs2","ucs-2","base64","base64url","latin1","binary","hex"]
@@ -97,6 +98,20 @@ elif (options['ch'] == "hmac"):
         sys.exit(1)
 
     print(hmac_hash(options['a'], options['k'], options['i'], options['enc']))
+
+elif (options['ch'] == "keypair"):
+    print('Generate an assymetric key pair\n',
+                'Flags requered:\n',
+                'passphrase: alias -p\t  ["String"]\n')
+
+    if ( not 'p' in options ): 
+        print('No choose option provided or params are not valid')
+        print('Usage: node index.js -ch keypair -p password')
+        print('Values recived ', options)
+        sys.exit(1)
+
+    print(keypair( options.get('p') ))
+      
 
 else:
     print('Selected option are invalid')
