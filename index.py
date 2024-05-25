@@ -6,6 +6,7 @@ from decipher.index import decipher
 from hash.index import hash_file
 from hmac_hash.index import hmac_hash
 from keypair.index import keypair
+from sign.index import sign
 
 types = ["bytes", "int", "uuid"]
 encs = ["ascii","utf8","utf-8","utf16le","utf-16le","ucs2","ucs-2","base64","base64url","latin1","binary","hex"]
@@ -106,12 +107,41 @@ elif (options['ch'] == "keypair"):
 
     if ( not 'p' in options ): 
         print('No choose option provided or params are not valid')
-        print('Usage: node index.js -ch keypair -p password')
+        print('Usage: python index.py --ch keypair --p password')
         print('Values recived ', options)
         sys.exit(1)
 
     print(keypair( options.get('p') ))
-      
+
+elif (options['ch'] == "sign"):
+    print('Sign a file\n',
+            'Flags requered:\n',
+            'key: alias -k\t  ["String"]\n',
+            'input: alias -i\t  ["String"]\n', 
+            'passphrase: alias -p\t  ["String"]\n')
+
+    if ( not 'i','k','p' in options ): 
+        print('No choose option provided or params are not valid')
+        print('Usage:python index.py --ch sign --k publicKey --i inputPath --p password')
+        print('Values recived ', options)
+        sys.exit(1)
+
+    print(sign( options.get('i'), options.get('k'), options.get('p') ))
+
+elif (options['ch'] == "verify"):
+    print('Verify the sign for a file given \n',
+            'Flags requered:\n',
+            'publicKey: alias -pub\t  ["String"]\n',
+            'input: alias -i\t  ["String"]\n',
+            'sign: -s\t  ["String"]\n')
+
+    if ( not 'i','k','s' in options ): 
+        print('No choose option provided or params are not valid')
+        print('Usage:python index.py --ch sign --k publicKey --i inputPath --s sign')
+        print('Values recived ', options)
+        sys.exit(1)
+
+    print(sign( options.get('i'), options.get('k'), options.get('s') ))
 
 else:
     print('Selected option are invalid')
